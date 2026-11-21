@@ -1,0 +1,30 @@
+table,field,type,description
+m8_accounts,account_id,Text,C7... a card (Module 7's ids); B7... a personal loan or hire-purchase account in Module 7's book; B8... an account Module 7's book did not hold
+m8_accounts,product,Text,"CC credit card, PL personal loan, HP hire purchase"
+m8_accounts,open_month,Month,Month the account was opened
+m8_accounts,term_months,Number,PL and HP: the contractual term at origination
+m8_accounts,credit_limit_orig,Number,"CC: the credit limit when the card was opened, in baht"
+m8_accounts,m4_score,Number,The Module 4 score at application
+m8_accounts,pd_orig_12m,Number,Origination PD: the application score through Module 4's round trip. Fixed on the day the loan was made
+m8_accounts,contract_rate,Number,Annual interest rate as a decimal
+m8_accounts,eir,Number,"Effective interest rate. NakornCredit charges no origination fees, so it equals the contract rate (chapter 5)"
+m8_accounts,ltv_orig,Number,HP: loan divided by the vehicle's value at origination
+m8_accounts,restructure_month,Month,"PL and HP: the month the loan was last restructured because the customer was in difficulty, if it was. Blank if never"
+m8_panel,account_id,Text,Links to m8_accounts and m8_book
+m8_panel,product,Text,"CC, PL or HP"
+m8_panel,month,Month,"Month-end, 2024-10 to the data cut, 2026-09"
+m8_panel,months_on_book,Number,Months since the account was opened
+m8_panel,balance,Number,"Balance owed at month-end, in baht. Cards include interest and fees and can pass the limit"
+m8_panel,credit_limit,Number,CC only: the credit limit that month
+m8_panel,days_past_due,Number,"PL and HP: days past due at month-end, in days. Cards: Module 7's coding, 0, 30 (one payment missed, 31-60 days), 60 (61-90) or 90 (91+). 'More than 30 days past due' is 31 or more on PL and HP, and 30 or more on cards. An account's rows stop in the month it reaches 90 (Module 1's default)"
+m8_panel,pd_behav_12m,Number,"Behaviour PD: the bank's current 12-month PD for the account, from how it is behaving now. Given (constructed); this course does not build a behaviour score"
+m8_panel,watchlist,Number,1 if a credit officer has the account on the watchlist that month
+m8_panel,forborne,Number,PL and HP: 1 inside the 12 months after a restructure (NakornCredit's 12-month watch; BOT requires a year of monitoring and allows an upgrade after three months of payments)
+m8_book,account_id,Text,"Every account live at the cut, 2026-09-30, plus accounts that defaulted in the six months before it (still in workout)"
+m8_book,drawn,Number,Balance owed at the cut (for an account in default: at its default month)
+m8_book,credit_limit,Number,CC only: the credit limit at the cut
+m8_book,ead,Number,"Exposure at default, Module 7's way: term loans at their balance; cards at drawn plus one conversion factor of the undrawn limit, floored at drawn"
+m8_book,remaining_months,Number,PL and HP: instalments left on the current schedule
+m8_book,months_in_default,Number,Months since the account reached 90 days past due. Blank if it has not
+m8_book,lgd_long_run_eir,Number,"Module 6's long-run segment LGD. Module 6 discounted each file at its own contract rate, which is the EIR here: the provisioning LGD (chapter 5)"
+m8_book,lgd_downturn,Number,"Module 6's downturn segment LGD (capital), thin cells pooled to product"
